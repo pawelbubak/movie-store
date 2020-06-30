@@ -1,0 +1,38 @@
+<h2 class="page-title">Cart</h2>
+<div class="list-container" *ngIf="isAuthenticated()">
+  <mat-list *ngIf="cartContent$ | async as cart">
+    <mat-list-item *ngFor="let item of cart?.items">
+      <mat-divider></mat-divider>
+      <h3 matLine>
+        <a routerLink="{{'/movie/' + item?.movie?.id}}" routerLinkActive="active">
+          {{item?.movie?.title}} ({{item?.movie?.year}})
+        </a>
+      </h3>
+      <div matLine class="details-container">
+        <div>
+          <p><span>Category:</span> {{item?.movie?.category}}</p>
+          <p><span>Director:</span> {{item?.movie?.director}}</p>
+        </div>
+        <div>
+          <p>Unit price: {{item?.movie?.price | currency: "PLN": "code" : "1.2-2": "pl"}}</p>
+          <p style="margin: 0;">Quantity:</p>
+          <button mat-icon-button color="primary" (click)="addToCart(item)">
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+          <span>{{item?.quantity}}</span>
+          <button mat-icon-button color="primary" (click)="removeFromCart(item)">
+            <mat-icon>remove_circle_outline</mat-icon>
+          </button>
+          <p><span>Price:</span> {{item?.totalPrice | currency: "PLN": "code" : "1.2-2": "pl"}}</p>
+          <button mat-icon-button color="warn" (click)="deleteFromCart(item)">
+            <mat-icon>remove_shopping_cart</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-list-item>
+  </mat-list>
+  <div style="display: flex; justify-content: flex-end">
+    <p><b>Total: {{(cartContent$ | async)?.totalPrice | currency: "PLN": "code" : "1.2-2": "pl"}}</b>
+      ({{(convertedPrice$ | async) || 0 | currency: "EUR": "code" : "1.2-2": "pl"}})</p>
+  </div>
+</div>

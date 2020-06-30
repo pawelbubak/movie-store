@@ -1,0 +1,17 @@
+<div class="input-card-wrapper">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{(movie$|async)?.title}} ({{(movie$|async)?.year}})</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="movie-details">
+        <p><b>Category:</b> {{(movie$|async)?.category}}</p>
+        <p><b>Price:</b> {{(movie$|async)?.price | currency: "PLN": "code" : "1.2-2": "pl"}} ({{(convertedPrice$|async)
+          | currency: "EUR": "code" : "1.2-2": "pl"}})</p>
+        <p><b>Director:</b> {{(movie$|async)?.director}}</p>
+        <p><b>Cast:</b> {{(movie$|async)?.cast}}</p>
+      </div>
+      <p>{{(movie$|async)?.story}}</p>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,27 @@
+.toolbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .toolbar-options {
+    display: flex;
+    align-items: center;
+
+    h3 {
+      font: 500 16px/28px Roboto, "Helvetica Neue", sans-serif;
+      margin-right: 5px;
+    }
+
+    .cart-link {
+      display: block;
+      width: 100%;
+      margin: 0 16px;
+    }
+  }
+}

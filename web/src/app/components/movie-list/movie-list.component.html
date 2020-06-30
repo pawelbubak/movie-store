@@ -1,0 +1,54 @@
+<h2 class="page-title">Movies</h2>
+<ul class="block-container">
+  <li>
+    <form [formGroup]="movieSearchForm" class="form-full-width">
+      <mat-form-field class="form-field-full-width">
+        <mat-label>Search by category</mat-label>
+        <input type="text"
+               matInput
+               placeholder="Enter a category"
+               aria-label="Movie category"
+               formControlName="title"
+               [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+  </li>
+  <li>
+    <mat-paginator [length]="totalSize$ | async"
+                   [pageSize]="pageable.size"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="onPageChange($event)">
+    </mat-paginator>
+  </li>
+</ul>
+
+<div class="list-container">
+  <mat-list *ngIf="movies$ | async as movies">
+    <mat-list-item *ngFor="let movie of movies">
+      <mat-divider></mat-divider>
+      <h3 matLine>
+        <a routerLink="{{'/movie/' + movie.id}}" routerLinkActive="active">
+          {{movie.title}} ({{movie.year}})
+        </a>
+      </h3>
+      <div matLine class="details-container">
+        <div>
+          <p><span>Category:</span> {{movie.category}}</p>
+          <p><span>Director:</span> {{movie.director}}</p>
+          <p><span>Cast:</span> {{movie.cast}}</p>
+        </div>
+        <div>
+          <p><span>Price:</span> {{movie.price | currency: "PLN": "code" : "1.2-2": "pl"}}</p>
+          <button *ngIf="isAuthenticated()" mat-icon-button color="primary" (click)="addToCart(movie)">
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</div>

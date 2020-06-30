@@ -1,0 +1,36 @@
+.input-card-wrapper {
+  padding: 4rem;
+
+  mat-card-header {
+    display: flex;
+    justify-content: center;
+  }
+
+  .form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .inputs-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .actions-container {
+      display: flex;
+      flex-direction: column;
+
+      .input-invalid {
+        text-align: center;
+        color: #f44336;
+      }
+
+      a {
+        text-align: center;
+        color: #3f51b5;
+        text-decoration: none;
+      }
+    }
+  }
+}
