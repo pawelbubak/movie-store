@@ -1,5 +1,7 @@
 FROM maven:3.6.3-jdk-11-slim AS build
 COPY /src /usr/src/movie-store/src
+RUN rm -rf /usr/src/movie-store/src/main/resources/application.yml
+RUN mv /usr/src/movie-store/src/main/resources/application-docker.yml /usr/src/movie-store/src/main/resources/application.yml
 COPY pom.xml /usr/src/movie-store
 COPY Dockerfile /usr/src/movie-store
 RUN mvn -f /usr/src/movie-store/pom.xml -DskipTests=true clean install

@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+  store-db:
+    container_name: store-db
+    image: mysql:8.0.20
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: movie-store
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+    restart: unless-stopped
+    volumes:
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    networks:
+      - store-network
+  api:
+    container_name: movie-store-api
+    image: movie-store-api-0.0.1
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - 7070:7070
+    restart: on-failure
+    depends_on:
+      - store-db
+    networks:
+      - store-network
+  web:
+    container_name: movie-store-web
+    image: movie-store-web
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - 8080:4200
+    restart: on-failure
+    depends_on:
+      - api
+    networks:
+      - store-network
+
+volumes:
+  mysql-init:
+    driver: local
+  mysql-data:
+    driver: local
+
+networks:
+  store-network:
+    driver: bridge
